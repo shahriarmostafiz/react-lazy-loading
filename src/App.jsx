@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import { Suspense } from 'react';
 import { useState } from 'react';
 import PostSelector from './components/PostSelector';
 import Comments from './components/Comments';
@@ -10,13 +10,19 @@ const App = () => {
     setSelectedPostId(e.target.value);
   };
   return (
-    <div>
+    <div className='p-4'>
       <Suspense fallback={<h1>loading...</h1>}>
         <PostSelector onSelectPost={handleSelectPost} />
 
       </Suspense>
-      <Comments postId={selectedPostId} />
+      {
+        selectedPostId && (
+          <Suspense fallback={<h1>loading comments... </h1>}>
+            <Comments postId={selectedPostId} />
 
+          </Suspense>
+        )
+      }
     </div>
   );
 };
